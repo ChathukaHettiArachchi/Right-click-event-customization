@@ -16,7 +16,7 @@ body{
 .tabs button{
   padding:8px 14px;
   border:none;
-  background:#6d89b5;
+  background:#022e74;
   color:white;
   margin-right:4px;
   border-radius:6px;
@@ -26,15 +26,39 @@ body{
 .search-box{
   float:right;
   margin-bottom:10px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
 }
 
 .search-box input{
   width:280px;
-  padding:8px;
+  height:40px;
+  padding:0px 10px;
   font-size:15px;
   border:none;
-  border-bottom:2px solid #6aa0d8;
+  border-bottom:1px solid #0e8c99c7;
   outline:none;
+  background:transparent;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 10px;
+  line-height: 1;
+  padding: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color .15s;
+}
+
+.clear-btn:hover {
+  color: #f8f8fa;
 }
 
 table{
@@ -191,7 +215,8 @@ th{
   <button>Analytics</button>
 
   <div class="search-box">
-    🔍 <input id="searchBox" value="QTD">
+    🔍 <input id="searchBox" value="">
+    <button class="clear-btn" id="clearBtn" title="Clear search">&#x2715;</button>
   </div>
 </div>
 
@@ -263,8 +288,9 @@ th{
 const menu = document.getElementById("menu");
 const pasteOption = document.getElementById("pasteOption");
 const searchBox = document.getElementById("searchBox");
+const clearBtn = document.getElementById("clearBtn");
 const tooltip = document.getElementById("infoTooltip");
-const GAP = 10; // gap between icon and tooltip
+const GAP = 10;
 
 let selectedText = "";
 
@@ -274,21 +300,16 @@ const tooltipData = {
 };
 
 function showTooltip(iconEl, text) {
-  // Reset classes and show to measure
   tooltip.className = "info-tooltip";
   tooltip.textContent = text;
   tooltip.style.display = "block";
-  // tooltip.style.left = "-9999px";
-  // tooltip.style.top = "-9999px";
 
   const rect = iconEl.getBoundingClientRect();
   const tw = tooltip.offsetWidth;
   const th = tooltip.offsetHeight;
   const vw = window.innerWidth;
 
-  // Vertically center tooltip on the icon
   let top = rect.top + rect.height / 2 - th / 2;
-  // Clamp vertically
   top = Math.max(4, Math.min(window.innerHeight - th - 4, top));
 
   const spaceRight = vw - rect.right - GAP;
@@ -296,11 +317,9 @@ function showTooltip(iconEl, text) {
 
   let left;
   if(spaceRight >= tw) {
-    // Place to the right
     left = rect.right + GAP;
     tooltip.classList.add("side-right");
   } else {
-    // Place to the left
     left = rect.left - GAP - tw;
     tooltip.classList.add("side-left");
   }
@@ -308,6 +327,12 @@ function showTooltip(iconEl, text) {
   tooltip.style.left = left + "px";
   tooltip.style.top = top + "px";
 }
+
+clearBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  searchBox.value = "";
+  searchBox.focus();
+});
 
 function hideTooltip() {
   tooltip.style.display = "none";
@@ -355,8 +380,6 @@ pasteOption.addEventListener("click", () => {
 /* Purple option */
 document.getElementById("totalOption").addEventListener("click", () => {
 
-  const keywordsOnPaste = ["Total"];
-
   const Territories = [
     "New South Wales",
     "Victoria",
@@ -370,7 +393,6 @@ document.getElementById("totalOption").addEventListener("click", () => {
     "Sales From Other Sources"
   ];
 
-  // 🔥 Merge sources + Total
   const newValue = Territories.map(source => source + " Total").join("++");
 
   const current = searchBox.value.trim();
