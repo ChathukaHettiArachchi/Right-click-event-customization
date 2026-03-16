@@ -120,8 +120,8 @@ th{
 }
 
 .separator-blue{
-  height:1px;
-  background:#3e5579;
+  height:0.8px;
+  background:#04386963;
   margin:6px 0;
 }
 
@@ -269,43 +269,6 @@ th{
 
 </table>
 
-<!-- Custom Menu -->
-<!-- <div id="menu">
-
-  <div class="menu-item">Copy <span>Ctrl+C</span></div>
-  <div class="menu-item">Copy link to highlight</div>
-  <div class="menu-item">Search Google</div>
-  <div class="menu-item">Print… <span>Ctrl+P</span></div>
-  <div class="menu-item">Open in reading mode</div>
-  <div class="menu-item">Translate selection to English</div>
-
-  <div class="separator"></div>
-
-  <div class="menu-item">Inspect</div>
-
-  <div class="separator-blue"></div>
-
-  <div id="pasteOption" class="menu-item menu-disabled">
-    <span>Paste in Search area</span>
-    <span style="display:flex;align-items:center;gap:6px;">
-      <span>Alt+T</span>
-      <span class="info-icon-wrap">
-        <i class="material-icons" id="pasteInfoIcon">info</i>
-      </span>
-    </span>
-  </div>
-
-  <div class="menu-item menu-purple" id="totalOption">
-    <span>Total by source of sale</span>
-    <span style="display:flex;align-items:center;gap:6px;">
-      <span>Alt+T</span>
-      <span class="info-icon-wrap">
-        <i class="material-icons" id="totalInfoIcon">info</i>
-      </span>
-    </span>
-  </div>
-
-</div> -->
 
 
 <div id="menu">
@@ -358,10 +321,6 @@ th{
 
 <!-- Shared tooltip -->
 <div id="infoTooltip" class="info-tooltip"></div>
-
-
-
-
 
 
 
@@ -437,19 +396,7 @@ function hideTooltip() {
   el.addEventListener("click", e => e.stopPropagation());
 });
 
-/* Right click handler */
-// document.addEventListener("contextmenu", e => {
-//   if(e.target === searchBox) return;
-//   e.preventDefault();
 
-//   selectedText = window.getSelection().toString().trim();
-//   pasteOption.classList.toggle("menu-disabled", !selectedText);
-//   pasteOption.classList.toggle("menu-purple", !!selectedText);
-
-//   menu.style.display = "block";
-//   menu.style.left = e.pageX + "px";
-//   menu.style.top = e.pageY + "px";
-// });
 
 
 document.addEventListener("contextmenu", e => {
@@ -503,29 +450,38 @@ document.addEventListener("click", () => {
   hideTooltip();
 });
 
-/* Paste logic */
-// pasteOption.addEventListener("click", () => {
-//   if(!selectedText) return;
-//   let current = searchBox.value.trim();
-//   searchBox.value = current === "" ? selectedText : current.replace(/\s*$/, "") + "++" + selectedText;
-//   window.getSelection().removeAllRanges();
-// });
-
-
 
 function pasteInSearchArea() {
 
-  if (!selectedText || pasteOption.classList.contains("menu-disabled")) return;
+  // 👉 ALWAYS get latest selection
+  const text = window.getSelection().toString().trim();
+
+  if (!text) return;
 
   let current = searchBox.value.trim();
 
   searchBox.value =
     current === ""
-      ? selectedText
-      : current.replace(/\s*$/, "") + "++" + selectedText;
+      ? text
+      : current.replace(/\s*$/, "") + "++" + text;
 
   window.getSelection().removeAllRanges();
 }
+
+
+// function pasteInSearchArea() {
+
+//   if (!selectedText || pasteOption.classList.contains("menu-disabled")) return;
+
+//   let current = searchBox.value.trim();
+
+//   searchBox.value =
+//     current === ""
+//       ? selectedText
+//       : current.replace(/\s*$/, "") + "++" + selectedText;
+
+//   window.getSelection().removeAllRanges();
+// }
 
 function totalBySourceGroup() {
 
@@ -565,11 +521,11 @@ document.getElementById("totalOption").addEventListener("click", totalBySourceGr
 
 //shortcut keys initiating
 
-hotkeys('Ctrl+Alt+P', function(event) { 
+hotkeys('Alt+P', function(event) { 
   pasteInSearchArea();  
 });
 
-hotkeys('Ctrl+Alt+G', function(event) { 
+hotkeys('Alt+G', function(event) { 
   totalBySourceGroup();  
 });
 
