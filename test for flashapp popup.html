@@ -121,7 +121,7 @@ th{
 
 .separator-blue{
   height:1px;
-  background:#2459af;
+  background:#3e5579;
   margin:6px 0;
 }
 
@@ -341,15 +341,15 @@ th{
   <div id="pasteOption" class="menu-item menu-disabled">
     <span>Paste in Search area</span>
     <span style="display:flex;align-items:center;gap:6px;">
-      <span>Alt+T</span>
+      <span>Alt+P</span>
       <span class="info-icon-wrap"><i class="material-icons" id="pasteInfoIcon">info</i></span>
     </span>
   </div>
 
   <div class="menu-item menu-purple" id="totalOption">
-    <span>Total by source of sale</span>
+    <span>Total by source of sale group</span>
     <span style="display:flex;align-items:center;gap:6px;">
-      <span>Alt+T</span>
+      <span>Alt+G</span>
       <span class="info-icon-wrap"><i class="material-icons" id="totalInfoIcon">info</i></span>
     </span>
   </div>
@@ -359,7 +359,20 @@ th{
 <!-- Shared tooltip -->
 <div id="infoTooltip" class="info-tooltip"></div>
 
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
+
 <script>
+
+
+
+
 const menu = document.getElementById("menu");
 const pasteOption = document.getElementById("pasteOption");
 const searchBox = document.getElementById("searchBox");
@@ -491,15 +504,30 @@ document.addEventListener("click", () => {
 });
 
 /* Paste logic */
-pasteOption.addEventListener("click", () => {
-  if(!selectedText) return;
-  let current = searchBox.value.trim();
-  searchBox.value = current === "" ? selectedText : current.replace(/\s*$/, "") + "++" + selectedText;
-  window.getSelection().removeAllRanges();
-});
+// pasteOption.addEventListener("click", () => {
+//   if(!selectedText) return;
+//   let current = searchBox.value.trim();
+//   searchBox.value = current === "" ? selectedText : current.replace(/\s*$/, "") + "++" + selectedText;
+//   window.getSelection().removeAllRanges();
+// });
 
-/* Purple option */
-document.getElementById("totalOption").addEventListener("click", () => {
+
+
+function pasteInSearchArea() {
+
+  if (!selectedText || pasteOption.classList.contains("menu-disabled")) return;
+
+  let current = searchBox.value.trim();
+
+  searchBox.value =
+    current === ""
+      ? selectedText
+      : current.replace(/\s*$/, "") + "++" + selectedText;
+
+  window.getSelection().removeAllRanges();
+}
+
+function totalBySourceGroup() {
 
   const Territories = [
     "New South Wales",
@@ -514,22 +542,36 @@ document.getElementById("totalOption").addEventListener("click", () => {
     "Sales From Other Sources"
   ];
 
-  const newValue = Territories.map(source => source + " Total").join("++");
+  const newValue = Territories.map(s => s + " Total").join("++");
 
   const current = searchBox.value.trim();
 
-  if (current === "") {
-    searchBox.value = newValue;
-  } else {
-    searchBox.value = current.replace(/\s*$/, "") + "++" + newValue;
-  }
+  searchBox.value =
+    current === ""
+      ? newValue
+      : current.replace(/\s*$/, "") + "++" + newValue;
 
   window.getSelection().removeAllRanges();
+}
+
+
+// event listners for clicks
+pasteOption.addEventListener("click", pasteInSearchArea);
+
+document.getElementById("totalOption").addEventListener("click", totalBySourceGroup);
+
+
+
+
+//shortcut keys initiating
+
+hotkeys('Ctrl+Alt+P', function(event) { 
+  pasteInSearchArea();  
 });
 
-
-
-
+hotkeys('Ctrl+Alt+G', function(event) { 
+  totalBySourceGroup();  
+});
 
 </script>
 
