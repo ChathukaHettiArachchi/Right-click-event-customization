@@ -244,7 +244,7 @@ th{
 </table>
 
 <!-- Custom Menu -->
-<div id="menu">
+<!-- <div id="menu">
 
   <div class="menu-item">Copy <span>Ctrl+C</span></div>
   <div class="menu-item">Copy link to highlight</div>
@@ -276,6 +276,55 @@ th{
       <span class="info-icon-wrap">
         <i class="material-icons" id="totalInfoIcon">info</i>
       </span>
+    </span>
+  </div>
+
+</div> -->
+
+
+<div id="menu">
+
+  <div class="menu-item">Back <span>Alt+Left Arrow</span></div>
+  <div class="menu-item menu-disabled">Forward <span>Alt+Right Arrow</span></div>
+  <div class="menu-item">Reload <span>Ctrl+R</span></div>
+
+  <div class="separator"></div>
+
+  <div class="menu-item">Save as… <span>Ctrl+S</span></div>
+  <div class="menu-item">Print… <span>Ctrl+P</span></div>
+  <div class="menu-item">Cast…</div>
+  <div class="menu-item">Search this tab with Google Lens</div>
+  <div class="menu-item">Open in reading mode</div>
+
+  <div class="separator"></div>
+
+  <div class="menu-item">Send to your devices</div>
+  <div class="menu-item">Create QR Code for this page</div>
+
+  <div class="separator"></div>
+
+  <div class="menu-item">Translate to English</div>
+
+  <div class="separator"></div>
+
+  <div class="menu-item">View page source <span>Ctrl+U</span></div>
+  <div class="menu-item">Inspect</div>
+
+  <div class="separator-blue"></div>
+
+  <div id="pasteOption" class="menu-item menu-disabled">
+    <span>Paste in Search area</span>
+    <span style="display:flex;align-items:center;gap:6px;">
+      <span>Alt+T</span>
+      <span class="info-icon-wrap"><i class="material-icons" id="pasteInfoIcon">info</i></span>
+    </span>
+  </div>
+
+  <div class="menu-item menu-purple" id="totalOption">
+    <span>Total by source of sale</span>
+    <span style="display:flex;align-items:center;gap:6px;">
+      <span>Alt+T</span>
+      <span class="info-icon-wrap"><i class="material-icons" id="totalInfoIcon">info</i></span>
     </span>
   </div>
 
@@ -405,6 +454,10 @@ document.getElementById("totalOption").addEventListener("click", () => {
 
   window.getSelection().removeAllRanges();
 });
+
+
+
+
 
 </script>
 
