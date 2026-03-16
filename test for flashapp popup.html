@@ -475,7 +475,6 @@ document.addEventListener("click", () => {
 
 
 
-
 // function pasteInSearchArea() {
 
 //   // 👉 ALWAYS get latest selection
@@ -549,13 +548,7 @@ function totalBySourceGroup() {
   ];
 
   const newValue = Territories.map(s => s + " Total").join("++");
-
-  const current = searchBox.value.trim();
-
-  searchBox.value =
-    current === ""
-      ? newValue
-      : current.replace(/\s*$/, "") + "++" + newValue;
+  searchBox.value = newValue;
 
   window.getSelection().removeAllRanges();
 }
