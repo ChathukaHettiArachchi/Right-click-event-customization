@@ -171,12 +171,12 @@ th{
 }
 
 .info-tooltip.side-left::before{
-  right:-16px;
+  right:-17px;
   border-left-color:#ddd;
 }
 
 .info-tooltip.side-left::after{
-  right:-16px;
+  right:-17px;
   border-left-color:#fff;
 }
 </style>
@@ -331,6 +331,7 @@ document.addEventListener("contextmenu", e => {
 
   selectedText = window.getSelection().toString().trim();
   pasteOption.classList.toggle("menu-disabled", !selectedText);
+  pasteOption.classList.toggle("menu-purple", !!selectedText);
 
   menu.style.display = "block";
   menu.style.left = e.pageX + "px";
@@ -353,8 +354,36 @@ pasteOption.addEventListener("click", () => {
 
 /* Purple option */
 document.getElementById("totalOption").addEventListener("click", () => {
-  alert("Under construction");
+
+  const keywordsOnPaste = ["Total"];
+
+  const Territories = [
+    "New South Wales",
+    "Victoria",
+    "Queensland",
+    "South Australia",
+    "Western Australia",
+    "Tasmania",
+    "Northern Territory",
+    "Capital Territory",
+    "Other Territory",
+    "Sales From Other Sources"
+  ];
+
+  // 🔥 Merge sources + Total
+  const newValue = Territories.map(source => source + " Total").join("++");
+
+  const current = searchBox.value.trim();
+
+  if (current === "") {
+    searchBox.value = newValue;
+  } else {
+    searchBox.value = current.replace(/\s*$/, "") + "++" + newValue;
+  }
+
+  window.getSelection().removeAllRanges();
 });
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
