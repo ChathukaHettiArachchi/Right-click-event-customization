@@ -451,22 +451,51 @@ document.addEventListener("click", () => {
 });
 
 
-function pasteInSearchArea() {
 
-  // 👉 ALWAYS get latest selection
-  const text = window.getSelection().toString().trim();
+// let pendingPasteText = "";
 
-  if (!text) return;
+// pasteOption.addEventListener("mousedown", e => {
+//     // Capture selection BEFORE click clears it
+//     pendingPasteText = window.getSelection().toString().trim();
+// });
 
-  let current = searchBox.value.trim();
+// pasteOption.addEventListener("click", () => {
+//     const text = pendingPasteText || window.getSelection().toString().trim();
+//     if (!text) return;
 
-  searchBox.value =
-    current === ""
-      ? text
-      : current.replace(/\s*$/, "") + "++" + text;
+//     let current = searchBox.value.trim();
+//     searchBox.value =
+//         current === ""
+//             ? text
+//             : current.replace(/\s*$/, "") + "++" + text;
 
-  window.getSelection().removeAllRanges();
-}
+//     window.getSelection().removeAllRanges();
+//     pendingPasteText = "";
+// });
+
+
+
+
+// function pasteInSearchArea() {
+
+//   // 👉 ALWAYS get latest selection
+//   const text = window.getSelection().toString().trim();
+
+//   if (!text) return;
+
+//   let current = searchBox.value.trim();
+
+//   searchBox.value =
+//     current === ""
+//       ? text
+//       : current.replace(/\s*$/, "") + "++" + text;
+
+//   window.getSelection().removeAllRanges();
+//   pendingPasteText = "";
+// }
+
+
+
 
 
 // function pasteInSearchArea() {
@@ -482,6 +511,27 @@ function pasteInSearchArea() {
 
 //   window.getSelection().removeAllRanges();
 // }
+
+
+function pasteInSearchArea() {
+  
+  const text = window.getSelection().toString().trim() || selectedText;
+
+  if (!text) return;
+
+  let current = searchBox.value.trim();
+
+  searchBox.value =
+    current === ""
+      ? text
+      : current.replace(/\s*$/, "") + "++" + text;
+
+  window.getSelection().removeAllRanges();
+  selectedText = ""; 
+}
+
+
+
 
 function totalBySourceGroup() {
 
