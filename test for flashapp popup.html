@@ -77,7 +77,7 @@ th{
   background:#eef2f7;
 }
 
-#menu{
+#flashrghtclkmenu{
   position:absolute;
   background:#fff;
   border-radius:8px;
@@ -89,7 +89,7 @@ th{
   font-size:14px;
 }
 
-.menu-item{
+.flashrghtclkmenu-item{
   padding:8px 14px;
   cursor:default;
   display:flex;
@@ -97,29 +97,29 @@ th{
   align-items:center;
 }
 
-.menu-item:hover{
+.flashrghtclkmenu-item:hover{
   background:#e8f0fe;
 }
 
-.menu-disabled{
+.flashrghtclkmenu-disabled{
   color:#aaa;
 }
 
-.menu-disabled:hover{
+.flashrghtclkmenu-disabled:hover{
   background:transparent;
 }
 
-.menu-purple{
+.flashrghtclkmenu-purple{
   color:purple;
 }
 
-.separator{
+.rghtmenuseparator{
   height:1px;
   background:#ddd;
   margin:6px 0;
 }
 
-.separator-blue{
+.rghtmenuseparator-blue{
   height:0.8px;
   background:#04386963;
   margin:6px 0;
@@ -271,37 +271,37 @@ th{
 
 
 
-<div id="menu">
+<div id="flashrghtclkmenu">
 
-  <div class="menu-item">Back <span>Alt+Left Arrow</span></div>
-  <div class="menu-item menu-disabled">Forward <span>Alt+Right Arrow</span></div>
-  <div class="menu-item">Reload <span>Ctrl+R</span></div>
+  <div class="flashrghtclkmenu-item">Back <span>Alt+Left Arrow</span></div>
+  <div class="flashrghtclkmenu-item flashrghtclkmenu-disabled">Forward <span>Alt+Right Arrow</span></div>
+  <div class="flashrghtclkmenu-item">Reload <span>Ctrl+R</span></div>
 
-  <div class="separator"></div>
+  <div class="rghtmenuseparator"></div>
 
-  <div class="menu-item">Save as… <span>Ctrl+S</span></div>
-  <div class="menu-item">Print… <span>Ctrl+P</span></div>
-  <div class="menu-item">Cast…</div>
-  <div class="menu-item">Search this tab with Google Lens</div>
-  <div class="menu-item">Open in reading mode</div>
+  <div class="flashrghtclkmenu-item">Save as… <span>Ctrl+S</span></div>
+  <div class="flashrghtclkmenu-item">Print… <span>Ctrl+P</span></div>
+  <div class="flashrghtclkmenu-item">Cast…</div>
+  <div class="flashrghtclkmenu-item">Search this tab with Google Lens</div>
+  <div class="flashrghtclkmenu-item">Open in reading mode</div>
 
-  <div class="separator"></div>
+  <div class="rghtmenuseparator"></div>
 
-  <div class="menu-item">Send to your devices</div>
-  <div class="menu-item">Create QR Code for this page</div>
+  <div class="flashrghtclkmenu-item">Send to your devices</div>
+  <div class="flashrghtclkmenu-item">Create QR Code for this page</div>
 
-  <div class="separator"></div>
+  <div class="rghtmenuseparator"></div>
 
-  <div class="menu-item">Translate to English</div>
+  <div class="flashrghtclkmenu-item">Translate to English</div>
 
-  <div class="separator"></div>
+  <div class="rghtmenuseparator"></div>
 
-  <div class="menu-item">View page source <span>Ctrl+U</span></div>
-  <div class="menu-item">Inspect</div>
+  <div class="flashrghtclkmenu-item">View page source <span>Ctrl+U</span></div>
+  <div class="flashrghtclkmenu-item">Inspect</div>
 
-  <div class="separator-blue"></div>
+  <div class="rghtmenuseparator-blue"></div>
 
-  <div id="pasteOption" class="menu-item menu-disabled">
+  <div id="pasteOption" class="flashrghtclkmenu-item flashrghtclkmenu-disabled">
     <span>Paste in Search area</span>
     <span style="display:flex;align-items:center;gap:6px;">
       <span>Alt+P</span>
@@ -309,7 +309,7 @@ th{
     </span>
   </div>
 
-  <div class="menu-item menu-purple" id="totalOption">
+  <div class="flashrghtclkmenu-item flashrghtclkmenu-purple" id="totalOption">
     <span>Total by source of sale group</span>
     <span style="display:flex;align-items:center;gap:6px;">
       <span>Alt+G</span>
@@ -332,7 +332,7 @@ th{
 
 
 
-const menu = document.getElementById("menu");
+const flashrghtclkmenu = document.getElementById("flashrghtclkmenu");
 const pasteOption = document.getElementById("pasteOption");
 const searchBox = document.getElementById("searchBox");
 const clearBtn = document.getElementById("clearBtn");
@@ -404,13 +404,13 @@ document.addEventListener("contextmenu", e => {
   e.preventDefault();
 
   selectedText = window.getSelection().toString().trim();
-  pasteOption.classList.toggle("menu-disabled", !selectedText);
-  pasteOption.classList.toggle("menu-purple", !!selectedText);
+  pasteOption.classList.toggle("flashrghtclkmenu-disabled", !selectedText);
+  pasteOption.classList.toggle("flashrghtclkmenu-purple", !!selectedText);
 
-  menu.style.display = "block";
+  flashrghtclkmenu.style.display = "block";
 
-  const menuH = menu.offsetHeight;
-  const menuW = menu.offsetWidth;
+  const menuH = flashrghtclkmenu.offsetHeight;
+  const menuW = flashrghtclkmenu.offsetWidth;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
@@ -426,90 +426,28 @@ document.addEventListener("contextmenu", e => {
   let y;
 
   if (spaceBelow >= menuH + 8) {
-    // Enough space below → open downward (default)
     y = e.clientY + window.scrollY;
   } else if (spaceAbove >= menuH + 8) {
-    // Not enough below, but enough above → open upward
     y = e.clientY + window.scrollY - menuH;
   } else {
-    // Neither fits perfectly → pick the side with more space
     y = spaceBelow >= spaceAbove
       ? e.clientY + window.scrollY
       : e.clientY + window.scrollY - menuH;
   }
 
-  menu.style.left = x + "px";
-  menu.style.top = y + "px";
+  flashrghtclkmenu.style.left = x + "px";
+  flashrghtclkmenu.style.top = y + "px";
 });
 
 
 
 /* Hide menu */
 document.addEventListener("click", () => {
-  menu.style.display = "none";
+  flashrghtclkmenu.style.display = "none";
   hideTooltip();
 });
 
 
-
-// let pendingPasteText = "";
-
-// pasteOption.addEventListener("mousedown", e => {
-//     // Capture selection BEFORE click clears it
-//     pendingPasteText = window.getSelection().toString().trim();
-// });
-
-// pasteOption.addEventListener("click", () => {
-//     const text = pendingPasteText || window.getSelection().toString().trim();
-//     if (!text) return;
-
-//     let current = searchBox.value.trim();
-//     searchBox.value =
-//         current === ""
-//             ? text
-//             : current.replace(/\s*$/, "") + "++" + text;
-
-//     window.getSelection().removeAllRanges();
-//     pendingPasteText = "";
-// });
-
-
-
-// function pasteInSearchArea() {
-
-//   // 👉 ALWAYS get latest selection
-//   const text = window.getSelection().toString().trim();
-
-//   if (!text) return;
-
-//   let current = searchBox.value.trim();
-
-//   searchBox.value =
-//     current === ""
-//       ? text
-//       : current.replace(/\s*$/, "") + "++" + text;
-
-//   window.getSelection().removeAllRanges();
-//   pendingPasteText = "";
-// }
-
-
-
-
-
-// function pasteInSearchArea() {
-
-//   if (!selectedText || pasteOption.classList.contains("menu-disabled")) return;
-
-//   let current = searchBox.value.trim();
-
-//   searchBox.value =
-//     current === ""
-//       ? selectedText
-//       : current.replace(/\s*$/, "") + "++" + selectedText;
-
-//   window.getSelection().removeAllRanges();
-// }
 
 
 function pasteInSearchArea() {
